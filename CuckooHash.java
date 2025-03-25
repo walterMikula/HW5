@@ -1,6 +1,6 @@
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Walter Mikula/ 002
  *
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
@@ -353,4 +353,3 @@ public class CuckooHash<K, V> {
 	}
 
 }
-
