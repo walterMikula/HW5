@@ -1,6 +1,6 @@
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Walter Mikula / 002
  *
  *   This java file contains the problem solutions of isSubSet, findKthLargest,
  *   and sort2Arrays methods. You should utilize the Java Collection Framework for
@@ -33,8 +33,17 @@ class ProblemSolutions {
     public boolean isSubset(int list1[], int list2[]) {
 
         // ADD YOU CODE HERE -- DON'T FORGET TO ADD YOR NAME AT TOP OF FILE
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : list1) {
+            set.add(num);
+        }
 
-        return false;
+        for (int num : list2) {
+            if (!set.contains(num)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -54,8 +63,20 @@ class ProblemSolutions {
     public int findKthLargest(int[] array, int k) {
 
         // ADD YOUR CODE HERE
+        if (array == null || k <= 0 || k > array.length) {
+            return 0; // Return 0 for invalid input
+        }
 
-        return 0;
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        for (int num : array) {
+            minHeap.offer(num);
+            if (minHeap.size() > k) {
+                minHeap.poll(); // Remove the smallest element if size exceeds k
+            }
+        }
+
+        return minHeap.peek(); // Return the k-th largest element
     }
 
 
@@ -75,8 +96,26 @@ class ProblemSolutions {
     public int[] sort2Arrays(int[] array1, int[] array2) {
 
         // ADD YOU CODE HERE
+        if (array1 == null || array2 == null) {
+            return null; // Return null if either array is null
+        }
 
-        return null;
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        for (int num : array1) {
+            minHeap.offer(num);
+        }
+
+        for (int num : array2) {
+            minHeap.offer(num);
+        }
+
+        int[] sortedArray = new int[minHeap.size()];
+        for (int i = 0; i < sortedArray.length; i++) {
+            sortedArray[i] = minHeap.poll(); // Extract elements in sorted order
+        }
+
+        return sortedArray;
     }
 
 }
