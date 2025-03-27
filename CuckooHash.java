@@ -245,41 +245,41 @@ public class CuckooHash<K, V> {
      */
 
     public void put(K key, V value) {
-
-        // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE.
+            // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE.
         // Also make sure you read this method's prologue above, it should help
         // you. Especially the two HINTS in the prologue.
+        int count = 0;
+        int pos = hash1(key);
 
+        K currentKey = key;
+        V currentValue = value;
 
-        int h1 = hash1(key);
-        int h2 = hash2(key);
-
-  
-        if (table[h1] != null && table[h1].getValue().equals(value) && table[h1].getBucKey().equals(key) ||
-                table[h2] != null && table[h2].getValue().equals(value) && table[h2].getBucKey().equals(key)) {
-            return;
-        }
-
-        Bucket<K,V> newBucket = new Bucket<>(key, value);
-        for (int i = 0; i < CAPACITY; i++) {
-            if (table[h1] == null) {
-                table[h1] = newBucket;
+        while (count < CAPACITY) {
+            if (table[pos] == null) {
+                table[pos] = new Bucket<>(currentKey, currentValue);
                 return;
-            } 
+            }
 
-            Bucket<K,V> tempBucket = table[h1]; 
-            table[h1] = newBucket;
-            newBucket = tempBucket;
+            if (table[pos].getBucKey().equals(currentKey) && table[pos].getValue().equals(currentValue)) {
+                return;
+            }
 
-            if (h1 == hash1(newBucket.getBucKey())) {
-                h1 = hash2(newBucket.getBucKey()); 
-            } else {
-                h1 = hash1(newBucket.getBucKey()); 
-        } 
+            Bucket<K, V> tempBucket = table[pos];
+            table[pos] = new Bucket<>(currentKey, currentValue);
+            currentKey = tempBucket.getBucKey();
+            currentValue = tempBucket.getValue();
 
-        rehash(); 
-        put(newBucket.getBucKey(), newBucket.getValue()); 
+            if (pos == hash1(currentKey)) {
+                pos = hash2(currentKey);
+            }
+            else {
+                pos = hash1(currentKey);
+            }
 
+            count++;
+        }
+        rehash();
+        put(currentKey, currentValue);
     }
 
 
