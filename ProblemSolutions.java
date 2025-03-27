@@ -33,12 +33,12 @@ class ProblemSolutions {
     public boolean isSubset(int list1[], int list2[]) {
 
         // ADD YOU CODE HERE -- DON'T FORGET TO ADD YOR NAME AT TOP OF FILE
-        HashSet<Integer> set = new HashSet<>();
+        HashSet<Integer> set = new HashSet<>(); // creates an empty set
         for (int num : list1) {
-            set.add(num);
+            set.add(num); // each number in the list will be added to the set
         }
 
-        for (int num : list2) {
+        for (int num : list2) { // each item in list2, if it is not have the number  return false
             if (!set.contains(num)) {
                 return false;
             }
@@ -64,19 +64,19 @@ class ProblemSolutions {
 
         // ADD YOUR CODE HERE
         if (array == null || k <= 0 || k > array.length) {
-            return 0; // Return 0 for invalid input
+            return 0;
         }
 
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
         for (int num : array) {
-            minHeap.offer(num);
+            minHeap.offer(num); //adding the numebr to minheap
             if (minHeap.size() > k) {
-                minHeap.poll(); // Remove the smallest element if size exceeds k
+                minHeap.poll(); // remove the smallest 
             }
         }
 
-        return minHeap.peek(); // Return the k-th largest element
+        return minHeap.peek(); 
     }
 
 
@@ -100,7 +100,7 @@ class ProblemSolutions {
             return null; // Return null if either array is null
         }
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(); //new queue
 
         for (int num : array1) {
             minHeap.offer(num);
@@ -112,7 +112,7 @@ class ProblemSolutions {
 
         int[] sortedArray = new int[minHeap.size()];
         for (int i = 0; i < sortedArray.length; i++) {
-            sortedArray[i] = minHeap.poll(); // Extract elements in sorted order
+            sortedArray[i] = minHeap.poll(); // sorted array
         }
 
         return sortedArray;
