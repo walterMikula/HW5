@@ -226,10 +226,10 @@ class BloomFilter {
         for (int n = 0; n < noHashes; n++) {
             long hc = hashCode(s, n);
             int bitNo = (int) (hc) & this.hashMask;
-            if (!data.get(bitNo)) {
+            if (!data.get(bitNo)) { // if the bit his set yet or not
                 return false;
             }
-        }
+        }// return true after the if statement 
         return true;
     }
 
