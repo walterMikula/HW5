@@ -250,24 +250,11 @@ public class CuckooHash<K, V> {
         // Also make sure you read this method's prologue above, it should help
         // you. Especially the two HINTS in the prologue.
 
-        // get initial h1 and h2 positions
-        // check for duplicate key-values, if so, just return, otherwise ->
-        // insert key into the h1 position
-
-        // if space, just add in k-v pair and return
-        // otherwise, need to do swapping
-        // save original key value pair and "kick out" original, and put in the new k-v pair
-        // change h1 depending on whether kicking out element in h1 or h2 position
-        // then loop again, with new k-v pair (the one that was kicked out) and new positions
-        // keep repeating this until either empty bucket is found and method returns
-        // or until loops reaches capacity (assume stuck in a cycle)
-
-        // if this occurs, grow hash table and recursively call the method again
 
         int h1 = hash1(key);
         int h2 = hash2(key);
 
-        // check if key-value pair already exists in hash map
+  
         if (table[h1] != null && table[h1].getValue().equals(value) && table[h1].getBucKey().equals(key) ||
                 table[h2] != null && table[h2].getValue().equals(value) && table[h2].getBucKey().equals(key)) {
             return;
@@ -278,22 +265,20 @@ public class CuckooHash<K, V> {
             if (table[h1] == null) {
                 table[h1] = newBucket;
                 return;
-            } // if h1 bucket is open, just add new key value pair to the bucket and return
+            } 
 
-            Bucket<K,V> tempBucket = table[h1]; // save the current bucket, since it is being "kicked out"
+            Bucket<K,V> tempBucket = table[h1]; 
             table[h1] = newBucket;
             newBucket = tempBucket;
 
             if (h1 == hash1(newBucket.getBucKey())) {
-                h1 = hash2(newBucket.getBucKey()); // if kicking out of h1, change insert to h2 hash
+                h1 = hash2(newBucket.getBucKey()); 
             } else {
-                h1 = hash1(newBucket.getBucKey()); // otherwise, we're kicking something out of h2, and want to insert into h1
-            }
-        } // insertion continues until either empty bucket is found and method returns (ending the loop)
-        // or until it loops to capacity
+                h1 = hash1(newBucket.getBucKey()); 
+        } 
 
-        rehash(); // grow hash table
-        put(newBucket.getBucKey(), newBucket.getValue()); // recursively calling method
+        rehash(); 
+        put(newBucket.getBucKey(), newBucket.getValue()); 
 
     }
 
